@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:strudl/get/AppController.dart';
+import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/pages/splash_screen.dart';
 import 'package:strudl/theme/strudl_ui_theme.dart';
 
