@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:strudl/forms/session_form.dart';
 import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/models/session.dart';
@@ -37,7 +38,7 @@ class _SessionPageState extends State<SessionPage>
     );
   }
 
-  void _startSession() {
+  void _startSession([DateTime? sessionStart]) {
     setState(() {
       // Start the animation
       _controller.repeat(period: const Duration(seconds: 1));
@@ -52,13 +53,27 @@ class _SessionPageState extends State<SessionPage>
         ),
       );
 
-      // Update the app state
-      AppController.to.sessionIsActive.value = true;
-      AppController.to.sessionStartedAt.value = DateTime.now();
+      // Starting a new session
+      if (sessionStart == null) {
+        // Update the app state
+        AppController.to.sessionIsActive.value = true;
+        AppController.to.sessionStartedAt.value = DateTime.now();
 
-      // Update the page state
-      _sessionIsRunning = true;
-      _sessionStartedAt = DateTime.now();
+        // Update the page state
+        _sessionIsRunning = true;
+        _sessionStartedAt = DateTime.now();
+
+        GetStorage().write("session_is_active", true);
+        GetStorage().write("session_start", DateTime.now().toIso8601String());
+      }
+
+      // Restoring a session
+      else {
+        // Update the page state
+        _sessionIsRunning = true;
+        _sessionStartedAt = sessionStart;
+        _sessionLength = DateTime.now().difference(sessionStart).inSeconds;
+      }
     });
   }
 
@@ -72,6 +87,7 @@ class _SessionPageState extends State<SessionPage>
 
       // Update the app state
       AppController.to.sessionIsActive.value = false;
+      GetStorage().write("session_is_active", false);
       _sessionIsRunning = false;
       _sessionLength = 0;
     });
@@ -106,6 +122,11 @@ class _SessionPageState extends State<SessionPage>
 
     // An empty timer just to initialize the field
     _timer = Timer(const Duration(hours: 1), () {});
+
+    // Session was active in the background - restore it
+    if (AppController.to.sessionIsActive.value) {
+      _startSession(AppController.to.sessionStartedAt.value);
+    }
   }
 
   @override

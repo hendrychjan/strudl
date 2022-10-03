@@ -23,7 +23,15 @@ class AppInitService {
     String defaultLocale = await findSystemLocale();
 
     await GetStorage().writeIfNull("app_locale", defaultLocale);
+    await GetStorage().writeIfNull("session_is_active", false);
+    await GetStorage()
+        .writeIfNull("session_start", DateTime.now().toIso8601String());
+
     AppController.to.appLocale.value = GetStorage().read("app_locale");
+    AppController.to.sessionIsActive.value =
+        GetStorage().read("session_is_active");
+    AppController.to.sessionStartedAt.value =
+        DateTime.parse(GetStorage().read("session_start"));
   }
 
   static Future<void> _initHive() async {
