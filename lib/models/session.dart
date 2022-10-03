@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/services/hive/hive_session_service.dart';
 
 // hive_generate command: flutter packages pub run build_runner build
@@ -34,8 +33,12 @@ class Session extends HiveObject {
     required this.sessionTypeId,
   });
 
-  static List<Session> getSessions() {
-    return HiveSessionService.getSessions();
+  static List<Session> getSessions([Map? filter]) {
+    return HiveSessionService.getSessions(filter);
+  }
+
+  static Session getSessionById(int id) {
+    return HiveSessionService.getSession(id);
   }
 
   Future<void> create({forceId = false}) async {
@@ -52,5 +55,16 @@ class Session extends HiveObject {
 
   Future<void> remove() async {
     await HiveSessionService.deleteSession(this);
+  }
+
+  static String formatSessionTime(int sessionLength) {
+    Duration sessionDuration = Duration(seconds: sessionLength);
+
+    String hours = sessionDuration.inHours.toString().padLeft(0, '2');
+    String minutes =
+        sessionDuration.inMinutes.remainder(60).toString().padLeft(2, '0');
+    String seconds =
+        sessionDuration.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return "$hours:$minutes:$seconds";
   }
 }

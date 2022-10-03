@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:strudl/pages/home_page.dart';
+import 'package:strudl/pages/main_page.dart';
 import 'package:strudl/services/app_init_service.dart';
 
 /// Splash screen that runs the appInit method
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () => AppInitService.init(),
     ).then(
       (v) => Get.off(
-        () => const HomePage(),
+        () => const MainPage(),
       ),
     );
   }
@@ -32,9 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const Center(
+    return const Scaffold(
+      body: Center(
         child: CircularProgressIndicator(),
       ),
     );

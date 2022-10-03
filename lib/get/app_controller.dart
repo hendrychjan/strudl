@@ -8,4 +8,12 @@ class AppController extends GetxController {
   // Data state
   var courses = List<Course>.empty(growable: true).obs;
   var sessionTypes = List<SessionType>.empty(growable: true).obs;
+
+  // App state
+  var appLocale = ''.obs;
+  var selectedPageIndex = 0.obs;
+  var sessionIsActive = false.obs;
+  var sessionStartedAt = DateTime(2000).obs;
+
+  var updateHook = 1.obs;
 }
