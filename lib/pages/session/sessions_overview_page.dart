@@ -123,7 +123,9 @@ class _SessionsOverviewPageState extends State<SessionsOverviewPage> {
           children: [
             if (_sessions.isEmpty)
               const Expanded(
-                child: Text("No results match the filter"),
+                child: Center(
+                  child: Text("No results match the filter"),
+                ),
               )
             else
               Obx(() {

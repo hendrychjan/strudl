@@ -26,6 +26,24 @@ class Course extends HiveObject {
     required this.color,
   });
 
+  factory Course.fromMap(Map<String, dynamic> map) {
+    return Course(
+      id: int.parse(map['id']),
+      title: map['title'],
+      description: map['description'],
+      color: map['color'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id.toString(),
+      'title': title,
+      'description': description,
+      'color': color,
+    };
+  }
+
   static List<Course> getCourses() {
     return HiveCourseService.getCourses();
   }
@@ -51,5 +69,9 @@ class Course extends HiveObject {
     await HiveCourseService.deleteCourse(this);
 
     AppController.to.courses.removeWhere((c) => c.id == id);
+  }
+
+  bool existsIn(List<Course> target) {
+    return target.where((c) => c.id == id).isNotEmpty;
   }
 }

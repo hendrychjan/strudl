@@ -6,6 +6,7 @@ import 'package:strudl/forms/session_form.dart';
 import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/models/session.dart';
 import 'package:strudl/pages/session/sessions_overview_page.dart';
+import 'package:strudl/pages/settings_page.dart';
 import 'package:strudl/services/ui_helper.dart';
 import 'package:strudl/theme/sprite_painter.dart';
 
@@ -140,17 +141,24 @@ class _SessionPageState extends State<SessionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: UiHelper.renderPageAppBar("Session", actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () => _displaySessionDialog(
-            SessionForm(
-              handleSubmit: _handleSubmitNew,
-              onCancel: Get.back,
+      appBar: UiHelper.renderPageAppBar(
+        "Session",
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _displaySessionDialog(
+              SessionForm(
+                handleSubmit: _handleSubmitNew,
+                onCancel: Get.back,
+              ),
             ),
           ),
+        ],
+        leading: IconButton(
+          onPressed: () => Get.to(() => const SettingsPage()),
+          icon: const Icon(Icons.settings),
         ),
-      ]),
+      ),
       floatingActionButton: FloatingActionButton(
         heroTag: UniqueKey(),
         onPressed: () => Get.to(() => const SessionsOverviewPage()),

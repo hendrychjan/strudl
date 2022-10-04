@@ -22,6 +22,22 @@ class SessionType extends HiveObject {
     required this.color,
   });
 
+  factory SessionType.fromMap(Map<String, dynamic> map) {
+    return SessionType(
+      id: int.parse(map['id']),
+      title: map['title'],
+      color: map['color'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id.toString(),
+      'title': title,
+      'color': color,
+    };
+  }
+
   static List<SessionType> getSessionTypes() {
     return HiveSessionTypeService.getSessionTypes();
   }
@@ -47,5 +63,9 @@ class SessionType extends HiveObject {
     await HiveSessionTypeService.deleteSessionType(this);
 
     AppController.to.sessionTypes.removeWhere((c) => c.id == id);
+  }
+
+  bool existsIn(List<SessionType> target) {
+    return target.where((st) => st.id == id).isNotEmpty;
   }
 }

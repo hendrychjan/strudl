@@ -13,12 +13,14 @@ class UiHelper {
     return Color(0xFF + int.parse(hexString.substring(1), radix: 16));
   }
 
-  static AppBar renderPageAppBar(String title, {List<Widget>? actions}) {
+  static AppBar renderPageAppBar(String title,
+      {List<Widget>? actions, Widget? leading}) {
     return AppBar(
       key: UniqueKey(),
       title: Text(title),
       actions: actions,
       elevation: 0,
+      leading: leading,
     );
   }
 
