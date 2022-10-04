@@ -1,7 +1,7 @@
 name: strudl
 description: Visualize your studying efforts (hell). See how much effort you put into each course/class.
 publish_to: 'none'
-version: 0.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
