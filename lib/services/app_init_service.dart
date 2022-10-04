@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/models/course.dart';
 import 'package:strudl/models/session.dart';
@@ -15,6 +16,13 @@ class AppInitService {
     await _initHive();
     await _loadHiveData();
     await _initLocalizations();
+    await _initAppInfo();
+  }
+
+  static Future<void> _initAppInfo() async {
+    // Get the app info (version and build)
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    AppController.to.appVersion.value = "v${packageInfo.version}";
   }
 
   static _initGetStorage() async {

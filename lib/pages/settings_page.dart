@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:strudl/get/app_controller.dart';
 import 'package:strudl/services/local_data_service.dart';
 import 'package:strudl/services/ui_helper.dart';
 
@@ -103,6 +104,26 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
               ],
             ),
+            Expanded(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(
+                  () => Text(
+                    AppController.to.appVersion.string,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    "OSS with ❤️ by Jan Hendrych",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ))
           ],
         ),
       ),

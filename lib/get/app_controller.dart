@@ -16,4 +16,6 @@ class AppController extends GetxController {
   var sessionStartedAt = DateTime(2000).obs;
 
   var updateHook = 1.obs;
+
+  var appVersion = "".obs;
 }
